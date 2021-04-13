@@ -1,23 +1,27 @@
-import React, { useState } from "react"
-import { Card, Button, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
+import React, { useState } from "react";
+import { Card, Button, Alert } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { Link, useHistory } from "react-router-dom";
+import QRCode from "qrcode.react";
 
 export default function Dashboard() {
-  const [error, setError] = useState("")
-  const { currentUser, logout } = useAuth()
-  const history = useHistory()
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
+  const history = useHistory();
 
   async function handleLogout() {
-    setError("")
+    setError("");
 
     try {
-      await logout()
-      history.push("/login")
+      await logout();
+      history.push("/login");
     } catch {
-      setError("Failed to log out")
+      setError("Failed to log out");
     }
   }
+
+  // console.log(currentUser.email);
+  // console.log(currentUser.uid);
 
   return (
     <>
@@ -36,6 +40,15 @@ export default function Dashboard() {
           Log Out
         </Button>
       </div>
+      <div className="row">
+        <div className="mx-auto">
+          <QRCode value={currentUser.uid} includeMargin size="300" />
+        </div>
+      </div>
+      <div className="text-center">
+
+        <p>Head over to the activations on our stand and scan this QR code to interact.</p>
+      </div>
     </>
-  )
+  );
 }
