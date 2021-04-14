@@ -20,7 +20,7 @@ export default function Dashboard() {
     }
   }
 
-  // console.log(currentUser.email);
+  console.log(currentUser.emailVerified);
   // console.log(currentUser.uid);
 
   return (
