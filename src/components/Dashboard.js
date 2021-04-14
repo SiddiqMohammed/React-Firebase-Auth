@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Card, Button, Alert } from "react-bootstrap";
+import React, { useState } from "react";
+import { Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import QRCode from "qrcode.react";
-import qrcode from "qrcode.react";
+import { db } from "../firebase";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
@@ -21,6 +21,14 @@ export default function Dashboard() {
     }
   }
 
+  const [username, setUsername] = useState("");
+  db.collection("users")
+    .doc(currentUser.uid)
+    .get()
+    .then((doc) => {
+      setUsername(doc.data().name);
+    });
+
   return (
     <>
       <div
@@ -33,6 +41,7 @@ export default function Dashboard() {
         <p>
           We've sent an email to <b>{currentUser.email}</b> to verify. Please
           click the link in the email and then click continue below.
+          <br />
           <button
             className="btn btn-primary w-50 mt-3"
             onClick={() => window.location.reload()}
@@ -47,12 +56,18 @@ export default function Dashboard() {
       <div style={{ display: currentUser.emailVerified ? "block" : "none" }}>
         <Card>
           <Card.Body>
-            <h2 className="text-center mb-4">Profile</h2>
+            <h2 className="text-center mb-3">Profile</h2>
             {error && <Alert variant="danger">{error}</Alert>}
-            <strong>Email:</strong> {currentUser.email}
- 
+            {/* <strong>Email:</strong> {currentUser.email} */}
+            <p>
+              Hello <b>{username}</b>,
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
             <div className="row">
-              <div className="mx-auto HpQrcode">
+              <div className="mx-auto">
                 <QRCode
                   value={currentUser.uid}
                   includeMargin
@@ -70,7 +85,10 @@ export default function Dashboard() {
             <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
               Update Profile
             </Link>
-            <button className="btn btn-primary w-100 mt-2" onClick={handleLogout}>
+            <button
+              className="btn btn-primary w-100 mt-2"
+              onClick={handleLogout}
+            >
               Log Out
             </button>
           </Card.Body>
