@@ -42,7 +42,8 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user !== null) {
+      if (user !== null && user.emailVerified !== true) {
+        // console.log("verified?", user.emailVerified);
         user.sendEmailVerification();
       }
       setCurrentUser(user);
@@ -51,6 +52,7 @@ export function AuthProvider({ children }) {
 
     return unsubscribe;
   }, []);
+  
 
   const value = {
     currentUser,
