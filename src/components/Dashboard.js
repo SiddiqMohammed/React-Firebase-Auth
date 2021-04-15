@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import QRCode from "qrcode.react";
 import { db } from "../firebase";
 
-export default function Dashboard() {
+export default function Dashboard(...props) {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const history = useHistory();
+  const [userInfo, setUserInfo] = useState("");
 
   async function handleLogout() {
     setError("");
@@ -21,13 +22,17 @@ export default function Dashboard() {
     }
   }
 
-  const [username, setUsername] = useState("");
-  db.collection("users")
-    .doc(currentUser.uid)
-    .get()
-    .then((doc) => {
-      setUsername(doc.data().name);
-    });
+  if (props[0].location.state && userInfo === "") {
+    setUserInfo(props[0].location.state);
+  } else if (userInfo === "") {
+    db.collection("users")
+      .doc(currentUser.uid)
+      .get()
+      .then((doc) => {
+        setUserInfo(doc.data());
+      });
+    console.log("userInfo");
+  }
 
   return (
     <>
@@ -60,7 +65,7 @@ export default function Dashboard() {
             {error && <Alert variant="danger">{error}</Alert>}
             {/* <strong>Email:</strong> {currentUser.email} */}
             <p>
-              Hello <b>{username}</b>,
+              Hello <b>{userInfo.name}</b>,
             </p>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -82,7 +87,13 @@ export default function Dashboard() {
                 to interact.
               </p>
             </div>
-            <Link to="/Scan-Qr" className="btn btn-primary w-100 mt-3">
+            <Link
+              to={{
+                pathname: "/Scan-Qr",
+                state: userInfo,
+              }}
+              className="btn btn-primary w-100 mt-3"
+            >
               Scan QR
             </Link>
             <Link to="/update-profile" className="btn btn-primary w-100 mt-2">

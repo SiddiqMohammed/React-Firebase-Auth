@@ -1,14 +1,14 @@
-import React from "react"
-import Signup from "./Signup"
-import { Container } from "react-bootstrap"
-import { AuthProvider } from "../contexts/AuthContext"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-import Dashboard from "./Dashboard"
-import Login from "./Login"
-import PrivateRoute from "./PrivateRoute"
-import ForgotPassword from "./ForgotPassword"
-import UpdateProfile from "./UpdateProfile"
-import ScanQr from "./ScanQr"
+import React from "react";
+import Signup from "./Signup";
+import { Container } from "react-bootstrap";
+import { AuthProvider } from "../contexts/AuthContext";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Dashboard from "./Dashboard";
+import Login from "./Login";
+import PrivateRoute from "./PrivateRoute";
+import ForgotPassword from "./ForgotPassword";
+import UpdateProfile from "./UpdateProfile";
+import ScanQr from "./ScanQr";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
         </Router>
       </div>
     </Container>
-  )
+  );
 }
 
-export default App
+export default App;

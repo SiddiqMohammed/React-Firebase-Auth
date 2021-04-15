@@ -5,12 +5,11 @@ import { Link, useHistory } from "react-router-dom";
 import QRCode from "qrcode.react";
 import { db } from "../firebase";
 
-export default function ScanQr() {
+export default function ScanQr(...props) {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const history = useHistory();
-  const [username, setUsername] = useState("");
-
+  const [userInfo, setUserInfo] = useState("");
   async function handleLogout() {
     setError("");
 
@@ -22,16 +21,12 @@ export default function ScanQr() {
     }
   }
 
-  if (currentUser !== null) {
-    db.collection("users")
-      .doc(currentUser.uid)
-      .get()
-      .then((doc) => {
-        setUsername(doc.data().name);
-      });
+  if (currentUser === null) {
+    window.location.href = "/login";
   }
-  else {
-      window.location.href="/login"
+
+  if (userInfo === "") {
+    setUserInfo(props[0].location.state);
   }
 
   return (
@@ -64,7 +59,7 @@ export default function ScanQr() {
             <h2 className="text-center mb-3">Profile</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             <p>
-              Hello <b>{username}</b>,
+              Hello <b>{userInfo.name}</b>,
             </p>
             <div className="row">
               <div className="mx-auto">
@@ -82,7 +77,13 @@ export default function ScanQr() {
                 to interact.
               </p>
             </div>
-            <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+            <Link
+              to={{
+                pathname: "/",
+                state: userInfo,
+              }}
+              className="btn btn-primary w-100 mt-3"
+            >
               Go To Dashboard
             </Link>
             <button
