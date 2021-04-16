@@ -5,10 +5,11 @@ import { Link, useHistory } from "react-router-dom";
 import QRCode from "qrcode.react";
 import { db } from "../firebase";
 
-export default function Dashboard() {
+export default function ScanQr() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const history = useHistory();
+  const [username, setUsername] = useState("");
 
   async function handleLogout() {
     setError("");
@@ -21,13 +22,17 @@ export default function Dashboard() {
     }
   }
 
-  const [username, setUsername] = useState("");
-  db.collection("users")
-    .doc(currentUser.uid)
-    .get()
-    .then((doc) => {
-      setUsername(doc.data().name);
-    });
+  if (currentUser !== null) {
+    db.collection("users")
+      .doc(currentUser.uid)
+      .get()
+      .then((doc) => {
+        setUsername(doc.data().name);
+      });
+  }
+  else {
+      window.location.href="/login"
+  }
 
   return (
     <>
@@ -58,13 +63,8 @@ export default function Dashboard() {
           <Card.Body>
             <h2 className="text-center mb-3">Profile</h2>
             {error && <Alert variant="danger">{error}</Alert>}
-            {/* <strong>Email:</strong> {currentUser.email} */}
             <p>
               Hello <b>{username}</b>,
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
             <div className="row">
               <div className="mx-auto">
@@ -82,11 +82,8 @@ export default function Dashboard() {
                 to interact.
               </p>
             </div>
-            <Link to="/Scan-Qr" className="btn btn-primary w-100 mt-3">
-              Scan QR
-            </Link>
-            <Link to="/update-profile" className="btn btn-primary w-100 mt-2">
-              Update Profile
+            <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+              Go To Dashboard
             </Link>
             <button
               className="btn btn-primary w-100 mt-2"
