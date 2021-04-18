@@ -33,6 +33,20 @@ export default function Dashboard(...props) {
       });
     console.log("userInfo");
   }
+  
+
+  // async function getMarkers() {
+  //   const events = await db.collection('users').get()
+  //     .then(querySnapshot => {
+  //       querySnapshot.docs.map(doc => {
+  //         console.log('LOG 1', doc.data());
+  //         return doc.data();
+  //       });
+  //     });
+  //     console.log('LOG 2', events);
+  //     return events;
+  // }
+  // getMarkers()
 
   return (
     <>

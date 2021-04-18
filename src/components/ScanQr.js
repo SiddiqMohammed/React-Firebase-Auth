@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, Component } from "react";
 import { Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-import QRCode from "qrcode.react";
+import QRscan from "./QRScanner"
 import { db } from "../firebase";
+
 
 export default function ScanQr(...props) {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const history = useHistory();
   const [userInfo, setUserInfo] = useState("");
+  const [QRInfo, setQRInfo] = useState("");
+
   async function handleLogout() {
     setError("");
 
@@ -53,6 +56,7 @@ export default function ScanQr(...props) {
           Log Out
         </button>
       </div>
+
       <div style={{ display: currentUser.emailVerified ? "block" : "none" }}>
         <Card>
           <Card.Body>
@@ -62,13 +66,9 @@ export default function ScanQr(...props) {
               Hello <b>{userInfo.name}</b>,
             </p>
             <div className="row">
-              <div className="mx-auto">
-                <QRCode
-                  value={currentUser.uid}
-                  includeMargin
-                  size="300"
-                  renderAs="svg"
-                />
+              <div className="mx-auto my-2">
+
+  <QRscan/>
               </div>
             </div>
             <div className="text-center">
