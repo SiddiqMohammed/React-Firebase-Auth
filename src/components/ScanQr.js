@@ -1,17 +1,14 @@
-import React, { useState, Component } from "react";
+import React, { useState } from "react";
 import { Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-import QRscan from "./QRScanner"
-import { db } from "../firebase";
-
+import QRscan from "./QRScanner";
 
 export default function ScanQr(...props) {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const history = useHistory();
   const [userInfo, setUserInfo] = useState("");
-  const [QRInfo, setQRInfo] = useState("");
 
   async function handleLogout() {
     setError("");
@@ -67,8 +64,7 @@ export default function ScanQr(...props) {
             </p>
             <div className="row">
               <div className="mx-auto my-2">
-
-  <QRscan/>
+                <QRscan />
               </div>
             </div>
             <div className="text-center">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
@@ -90,7 +90,7 @@ export default function Dashboard(...props) {
                 <QRCode
                   value={currentUser.uid}
                   includeMargin
-                  size="300"
+                  size={300}
                   renderAs="svg"
                 />
               </div>
