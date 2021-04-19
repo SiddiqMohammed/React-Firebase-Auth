@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-import QRscan from "./QRScanner";
+import QRscan from "../components/QRScanner";
 
 export default function ScanQr(...props) {
   const [error, setError] = useState("");

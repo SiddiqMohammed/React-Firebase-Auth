@@ -31,7 +31,8 @@ function Example() {
         </Modal.Header>
         <Modal.Body>
           Woohoo, you've caught a QR in the wind! You can collect points by
-          clicking on the button below. Make sure to visit <a href="http://thehanginghouse.com">The hanging house</a> website for
+          clicking on the button below. Make sure to visit{" "}
+          0<a href="http://thehanginghouse.com">The hanging house</a> website for
           more info.
         </Modal.Body>
         <Modal.Footer>
