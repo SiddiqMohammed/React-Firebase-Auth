@@ -6,8 +6,6 @@ import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 import Example from "./modalPop";
 
-
-
 function QRscanner() {
   const { currentUser } = useAuth();
   const [qrscan, setQrscan] = useState("");

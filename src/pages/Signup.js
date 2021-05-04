@@ -21,6 +21,10 @@ export default function Signup() {
       return setError("Passwords do not match");
     }
 
+    if (isNaN(numberRef.current.value) || (numberRef.current.value.toString().length < 10)){
+      return setError("Please enter your phone number")
+    }
+
     try {
       setError("");
       setLoading(true);
@@ -31,8 +35,8 @@ export default function Signup() {
         numberRef.current.value
       );
       history.push("/");
-    } catch {
-      setError("Failed to create an account");
+    } catch (err){
+      setError(err.message);
     }
 
     setLoading(false);

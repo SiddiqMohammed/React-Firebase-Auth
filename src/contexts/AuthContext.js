@@ -12,14 +12,16 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   function signup(email, password, name, number) {
-    return auth.createUserWithEmailAndPassword(email, password).then((cred) => {
-      db.collection("users").doc(cred.user.uid).set({
-        email: email,
-        uid: cred.user.uid,
-        name: name,
-        number: number
+    return auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((cred) => {
+        db.collection("users").doc(cred.user.uid).set({
+          email: email,
+          uid: cred.user.uid,
+          name: name,
+          number: number,
+        });
       });
-    });
   }
 
   function login(email, password) {
@@ -54,7 +56,6 @@ export function AuthProvider({ children }) {
 
     return unsubscribe;
   }, []);
-  
 
   const value = {
     currentUser,

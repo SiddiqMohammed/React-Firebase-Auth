@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import JsonData from "../data/data.json";
 import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
+import Confetti from "react-confetti";
 
 // export const modalPop = (props) => {
 function Example(props) {
@@ -41,6 +42,13 @@ function Example(props) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
+        <Confetti
+          width={500}
+          height={450}
+          numberOfPieces={600}
+          recycle={false}
+          gravity={0.1}
+        />
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             {datas.title}
